@@ -4,7 +4,7 @@ import shutil
 import os
 import whisper
 from soap_generator import generate_soap_note
-
+from icd10_lookup import get_suggestions_for_assessment_list
 app = FastAPI()
 
 print("Loading Whisper model... please wait")
@@ -101,11 +101,15 @@ async def create_soap_note(file: UploadFile = File(...)):
         print("Generating SOAP note...")
         soap_note = generate_soap_note(readable_transcript)
 
+        print("Looking up ICD-10 codes...")
+        icd10_suggestions = get_suggestions_for_assessment_list(soap_note.assessment)
+
         return {
             "status": "success",
             "filename": file.filename,
             "transcript": readable_transcript,
-            "soap_note": soap_note.model_dump()
+            "soap_note": soap_note.model_dump(),
+            "icd10_suggestions": icd10_suggestions
         }
 
     except Exception as e:
