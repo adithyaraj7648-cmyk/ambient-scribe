@@ -1,12 +1,12 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from pydantic import BaseModel
 import tempfile
 import shutil
 import os
 import whisper
 from soap_generator import generate_soap_note
-from icd10_lookup import get_suggestions_for_assessment_list
+from icd10_lookup import get_suggestions_for_assessment_list, get_icd10_suggestions
 app = FastAPI()
-
 print("Loading Whisper model... please wait")
 model = whisper.load_model("base")
 print("Whisper model loaded!")
@@ -116,3 +116,24 @@ async def create_soap_note(file: UploadFile = File(...)):
         if os.path.exists(temp_path):
             os.unlink(temp_path)
         raise HTTPException(status_code=500, detail=str(e))
+class ICD10SearchRequest(BaseModel):
+    diagnosis_text: str
+    top_n: int = 5
+
+
+@app.post("/icd10-search")
+async def search_icd10(request: ICD10SearchRequest):
+    """
+    Standalone ICD-10 lookup — type any diagnosis text, get back
+    the most likely billing codes. Fast, no audio processing needed.
+    """
+    suggestions = get_icd10_suggestions(
+        diagnosis_text=request.diagnosis_text,
+        top_n=request.top_n
+    )
+
+    return {
+        "status": "success",
+        "query": request.diagnosis_text,
+        "suggestions": suggestions
+    }

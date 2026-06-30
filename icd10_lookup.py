@@ -11,21 +11,23 @@ _collection = _chroma_client.get_collection(name="icd10_codes")
 print("ICD-10 lookup ready!")
 
 
-def get_icd10_suggestions(diagnosis_text: str, top_n: int = 5) -> list[dict]:
+def get_icd10_suggestions(diagnosis_text: str, top_n: int = 5, min_confidence: float = 0.3) -> list[dict]:
     """
     Given a diagnosis or assessment string, returns the top N most likely
     ICD-10 codes as a list of dicts: [{"code": ..., "description": ..., "confidence": ...}]
 
     confidence is a 0-1 score where 1.0 = perfect match, 0.0 = no similarity.
+    Results below min_confidence are excluded — they're likely irrelevant noise.
     """
     if not diagnosis_text or not diagnosis_text.strip():
         return []
 
     query_embedding = _embedder.encode([diagnosis_text]).tolist()
 
+    # Fetch more than we need, since some will get filtered out
     results = _collection.query(
         query_embeddings=query_embedding,
-        n_results=top_n
+        n_results=top_n * 2
     )
 
     suggestions = []
@@ -34,18 +36,19 @@ def get_icd10_suggestions(diagnosis_text: str, top_n: int = 5) -> list[dict]:
         description = results["documents"][0][i]
         distance = results["distances"][0][i]
 
-        # Convert distance (lower = better) into a confidence score (higher = better)
-        # Distance for these embeddings typically ranges 0-2, so we clamp and invert
         confidence = max(0.0, round(1 - (distance / 2), 3))
 
-        suggestions.append({
-            "code": code,
-            "description": description,
-            "confidence": confidence
-        })
+        if confidence >= min_confidence:
+            suggestions.append({
+                "code": code,
+                "description": description,
+                "confidence": confidence
+            })
+
+        if len(suggestions) >= top_n:
+            break
 
     return suggestions
-
 
 def get_suggestions_for_assessment_list(assessment_list: list[str], top_n: int = 3) -> dict:
     """
