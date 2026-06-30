@@ -28,11 +28,17 @@ async def transcribe_audio(file: UploadFile = File(...)):
     try:
         print(f"Transcribing {file.filename}...")
         with open(temp_path, "rb") as audio_file:
-            transcript = openai.audio.transcriptions.create(
-                model="whisper-1",
-                file=audio_file,
-                response_format="verbose_json"
-            )
+            medical_hint = (
+                "Patient presents with fever, headache, chest pain, dyspnea. "
+                "Doctor prescribes paracetamol, ibuprofen, metformin, amoxicillin. "
+                "Diagnosis: hypertension, diabetes, pneumonia, tachycardia."
+              )
+              transcript = openai.audio.transcriptions.create(
+                  model="whisper-1",
+                  file=audio_file,
+                  response_format="verbose_json",
+                  prompt=medical_hint
+             )
         print("Transcription done!")
 
         labeled_segments = []

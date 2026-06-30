@@ -1,0 +1,8 @@
+Ground truth: good morning how are you feeling today
+i have a headache and fever since two days
+any chest pain or difficulty breathing
+no chest pain but i feel very tired
+i will prescribe some paracetamol and ask for a blood test
+Basic WER: 94.6%
+Hinted WER: 94.6%
+Improvement: 0.0%
