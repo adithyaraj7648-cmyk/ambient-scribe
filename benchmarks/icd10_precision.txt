@@ -1,0 +1,66 @@
+ICD-10 CODE PRECISION EVALUATION
+==================================================
+Top-1 precision: 14/15 (93.3%)
+Top-3 precision: 15/15 (100.0%)
+Top-5 precision: 15/15 (100.0%)
+
+✓ fever and high temperature
+   Expected: R50.9, Rank: 1
+   Got: R50.9, J06.9, J00, J18.9, J02.9
+
+✓ patient has headache
+   Expected: R51.9, Rank: 1
+   Got: R51.9, G43.909, R50.9, R42, J02.9
+
+✓ shortness of breath and difficulty breathing
+   Expected: R06.02, Rank: 1
+   Got: R06.02, J45.909, R07.9, I50.9, J44.9
+
+✓ chest pain
+   Expected: R07.9, Rank: 1
+   Got: R07.9, I50.9, R10.9, R00.0, M54.5
+
+✓ nausea and vomiting
+   Expected: R11.0, Rank: 1
+   Got: R11.0, R11.10, R42, R10.9, K52.9
+
+✓ high blood pressure hypertension
+   Expected: I10, Rank: 1
+   Got: I10
+
+✓ type 2 diabetes mellitus
+   Expected: E11.9, Rank: 1
+   Got: E11.9, E10.9, E78.5, K30, N18.9
+
+✓ common cold runny nose
+   Expected: J00, Rank: 2
+   Got: R09.81, J00, J45.909, T78.40XA, R50.9
+
+✓ pneumonia lung infection
+   Expected: J18.9, Rank: 1
+   Got: J18.9, J06.9, J20.9, J44.9, J02.9
+
+✓ urinary tract infection
+   Expected: N39.0, Rank: 1
+   Got: N39.0, J06.9, K52.9, K29.70, N18.9
+
+✓ fatigue and tiredness
+   Expected: R53.83, Rank: 1
+   Got: R53.83, R11.0, G47.00, R42, E86.0
+
+✓ acute bronchitis cough
+   Expected: J20.9, Rank: 1
+   Got: J20.9, J06.9, J03.90, J00, J18.9
+
+✓ low back pain
+   Expected: M54.5, Rank: 1
+   Got: M54.5, M25.50, R10.9, R07.9, M79.1
+
+✓ anxiety disorder
+   Expected: F41.9, Rank: 1
+   Got: F41.9, F32.9, G47.00, J44.9, J45.909
+
+✓ depression
+   Expected: F32.9, Rank: 1
+   Got: F32.9, R53.83, F41.9, R11.0, G47.00
+
