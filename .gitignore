@@ -5,3 +5,6 @@ __pycache__/
 .DS_Store
 icd10_vector_db/
 test_audio.wav
+*.wav
+*.mp3
+*.m4a
