@@ -1,0 +1,25 @@
+Overall Clinical Accuracy: 87.5%
+Objective (vitals): 3/3
+Assessment: 1/1
+Plan: 3/4
+
+AI Generated SOAP Note:
+{
+  "subjective": "Patient reports headache and mild fever since yesterday, along with some nausea.",
+  "objective": {
+    "temperature_f": 100.8,
+    "blood_pressure": "122/78",
+    "heart_rate_bpm": 88,
+    "respiratory_rate": null
+  },
+  "objective_notes": null,
+  "assessment": [
+    "Mild viral infection"
+  ],
+  "plan": [
+    "Prescribe paracetamol 500mg twice daily",
+    "Recommend plenty of fluids",
+    "Encourage rest",
+    "Follow up in 3 days if symptoms don't improve"
+  ]
+}

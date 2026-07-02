@@ -1,1 +1,7 @@
+.env
+venv/
+__pycache__/
+*.pyc
+.DS_Store
 icd10_vector_db/
+test_audio.wav
